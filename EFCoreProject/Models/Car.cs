@@ -12,6 +12,5 @@ namespace EFCoreProject.Models
         public string RegistrationPlate { get; set; }
         public ICollection<Park> Parks { get; set; } = new List<Park>();
         public Brand? Brand { get; set; }
-        public int? BrandId { get; set; }
     }
 }

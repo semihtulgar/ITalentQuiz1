@@ -4,21 +4,21 @@
 
 namespace EFCoreProject.Migrations
 {
-    public partial class CreateCarParkDB : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Brands",
+                name: "Cars",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BrandName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    RegistrationPlate = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Brands", x => x.Id);
+                    table.PrimaryKey("PK_Cars", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -35,21 +35,21 @@ namespace EFCoreProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cars",
+                name: "Brands",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RegistrationPlate = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BrandId = table.Column<int>(type: "int", nullable: false)
+                    BrandName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CarId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cars", x => x.Id);
+                    table.PrimaryKey("PK_Brands", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cars_Brands_BrandId",
-                        column: x => x.BrandId,
-                        principalTable: "Brands",
+                        name: "FK_Brands_Cars_CarId",
+                        column: x => x.CarId,
+                        principalTable: "Cars",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -79,19 +79,22 @@ namespace EFCoreProject.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Brands_CarId",
+                table: "Brands",
+                column: "CarId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CarPark_ParksId",
                 table: "CarPark",
                 column: "ParksId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cars_BrandId",
-                table: "Cars",
-                column: "BrandId",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Brands");
+
             migrationBuilder.DropTable(
                 name: "CarPark");
 
@@ -100,9 +103,6 @@ namespace EFCoreProject.Migrations
 
             migrationBuilder.DropTable(
                 name: "Parks");
-
-            migrationBuilder.DropTable(
-                name: "Brands");
         }
     }
 }

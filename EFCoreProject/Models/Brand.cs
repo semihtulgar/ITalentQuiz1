@@ -11,5 +11,6 @@ namespace EFCoreProject.Models
         public int Id { get; set; }
         public string BrandName { get; set; }
         public Car Car { get; set; }
+        public int CarId { get; set; }
     }
 }
